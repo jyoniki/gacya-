@@ -75,3 +75,38 @@ data = [
   {"title":"SSR-5",
   "rarelity":3},
 ]
+
+
+$(function(){
+
+  function createResult(){
+    // ランダムな数を作る関数を定義
+    function randomChoice(array, num){
+        const arr = array.concat();
+        const choiced = []
+        let l = array.length;
+        let n = Math.min(num, array.length);
+        while(n-- > 0){
+            let i = Math.floor(Math.random() * l--);
+            choiced.push(arr[i]);
+            arr.splice(i, 1);
+        }
+        return choiced;
+    }
+    // 全データからランダムに9枚持ってくる
+    result = randomChoice(data, 9);
+
+    // 3だけのデータからランダムに1枚持ってきて9枚に足す
+    r3data = data.filter((datum) => {
+        return datum.rarelity === 3
+    })
+    result.push(randomChoice(r3data, 1)[0]);
+      }
+
+
+  $('#try').on('click',function(){
+    createResult();
+    $('#te').append(result);
+    console.log(result);
+  })
+})
