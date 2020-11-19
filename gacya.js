@@ -106,7 +106,10 @@ $(function(){
 
   $('#try').on('click',function(){
     createResult();
-    $('#te').append(result);
-    console.log(result);
+    var stock = '';
+    for (var i=0; i<result.length;i++){
+    stock += result[i].title + '星' + result[i].rarelity;
+    }
+    (stock)
   })
 })
