@@ -110,8 +110,10 @@ $(function(){
     for (var i=0; i<result.length;i++){
     stock += '<li>'+ result[i].title + ':' + '星' + (result[i].rarelity) + '</li>';
     }
-    $('#te').html(stock)
+    $('#result').html(stock)
   })
-
   
+  $('#reset').on('click',function(){
+   $('#result').html('');
+  })
 })
