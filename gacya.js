@@ -96,24 +96,29 @@ $(function(){
     // 全データからランダムに9枚持ってくる
     result = randomChoice(data, 9);
 
-    // 3だけのデータからランダムに1枚持ってきて9枚に足す
-    r3data = data.filter((datum) => {
-        return datum.rarelity === 3
+    // 2以上のデータからランダムに1枚持ってきて9枚に足す
+    thats_all_2 = data.filter((datum) => {
+
+        return datum.rarelity >= 2
+        
     })
-    result.push(randomChoice(r3data, 1)[0]);
+    result.push(randomChoice(thats_all_2, 1)[0]);
       }
 
-
+    // ガチャ実行ボタン
   $('#try').on('click',function(){
     createResult();
     var stock = '';
     for (var i=0; i<result.length;i++){
     stock += '<li>'+ result[i].title + ':' + '星' + (result[i].rarelity) + '</li>';
     }
+    
     $('#result').html(stock)
   })
-  
+    //リセットボタン 
   $('#reset').on('click',function(){
    $('#result').html('');
   })
+
+
 })
