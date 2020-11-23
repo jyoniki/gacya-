@@ -75,8 +75,8 @@ data = [
   {"title":"SSR-5",
   "rarelity":3},
 ]
-
-
+//counterの設定
+var countUpValue = 0;
 $(function(){
 
   function createResult(){
@@ -98,13 +98,11 @@ $(function(){
 
     // 2以上のデータからランダムに1枚持ってきて9枚に足す
     thats_all_2 = data.filter((datum) => {
-
         return datum.rarelity >= 2
-        
     })
+
     result.push(randomChoice(thats_all_2, 1)[0]);
       }
-
     // ガチャ実行ボタン
   $('#try').on('click',function(){
     createResult();
@@ -112,12 +110,17 @@ $(function(){
     for (var i=0; i<result.length;i++){
     stock += '<li>'+ result[i].title + ':' + '星' + (result[i].rarelity) + '</li>';
     }
-    
     $('#result').html(stock)
+    //押した回数の表示(10蓮刻み)
+    countUpValue+= 10;
+    $('#counter').html(`${countUpValue}連目`);
+
   })
     //リセットボタン 
   $('#reset').on('click',function(){
    $('#result').html('');
+   countUpValue= 0;
+   $('#counter').html('');
   })
 
 
