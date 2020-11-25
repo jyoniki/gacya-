@@ -76,8 +76,14 @@ data = [
   "rarelity":3},
 ]
 
+
   //counterの設定
 let countUpValue = 0;
+
+  //レアリティの収納先
+let r_count = 0;
+let sr_count = 0;
+let ssr_count =0;
 
 
 $(function(){
@@ -96,6 +102,7 @@ $(function(){
         }
         return choiced;
     }
+
     // 全データからランダムに9枚持ってくる
     result = randomChoice(data, 9);
 
@@ -105,25 +112,58 @@ $(function(){
     })
     result.push(randomChoice(thats_all_2, 1)[0]);
       }
+
     // ガチャ実行ボタン
   $('#try').on('click',function(){
     createResult();
-    // ガチャの結果表示画面
-    let stock = '';
+    // ガチャの結果表示画面(アイテム)
+    let stock1 = '';
     for (let i=0; i<result.length;i++){
-    stock += '<li>'+ result[i].title + ':' + '星' + (result[i].rarelity) + '</li>';
+    stock1 += '<li>'+ result[i].title + '</li>';
     }
-    $('#result').html(stock)
-    console.log('#result')
+    $('#result1').html(stock1)
 
-    //押した回数の表示(10蓮刻み)
+    // ガチャの結果表示(レアリティ)
+    let stock2 = '';
+    for (let i=0; i<result.length;i++){
+    stock2 += '<li>'+ '星' + (result[i].rarelity) + '</li>';
+    }
+    $('#result2').html(stock2)
+
+    //排出された結果をレアリティで振り分け
+    let count = {}; 
+    for (let i = 0; i < result.length;i++) {
+    let elm = result[i].rarelity;
+    count[elm] = (count[elm] || 0) + 1;
+    }
+    //対象のレアリティがなかった時に０で表示させる
+    if(!count[1]) count[1] = 0;
+    if(!count[2]) count[2] = 0;
+    if(!count[3]) count[3] = 0;
+
+    //総数の一時保存
+    r_count= r_count+ count[1];
+    sr_count = sr_count + count[2];
+    ssr_count = ssr_count + count[3];
+    
+    //排出されたレアリティの表示
+    result3 = `<te>R${r_count}:SR${sr_count}:SSR${ssr_count}</te>`
+    $('#result3').html(result3);
+    
+    //押した回数の表示(10連刻み)
     countUpValue+= 10;
     $('#counter').html(`${countUpValue}連目`);
   })
+
     //リセットボタン 
   $('#reset').on('click',function(){
-   $('#result').html('');
+   $('#result1').html('');
+   $('#result2').html('');
+   $('#result3').html('');
    countUpValue= 0;
    $('#counter').html('');
+   r_count = 0;
+   sr_count = 0;
+   ssr_count = 0;
   })
 })
